@@ -1,29 +1,30 @@
-package com.schmidt_landersdorfer.AI_Translation_Management.entity;
+package com.schmidt_landersdorfer.AI_Translation_Management.Entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-/**
- * Class to represent the feedback provided by a user
- */
-@Getter
-@Setter
+import java.util.Date;
+
+
 @Entity
+@Data
 @NoArgsConstructor
-@Table(name = "feedbacks")
+@Table(name = "user_feedbacks")
 public class UserFeedback {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private int rating;
     private String userComment;
     private Date feedbackDate;
 
-    public UserFeedback(int rating, String userComment) {
-        this.rating = rating;
-        this.userComment = userComment;
-        this.feedbackDate = new Date();
-    }
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "translation_id", nullable = false)
+    private Translation translation;
 }
